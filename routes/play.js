@@ -9,7 +9,7 @@ const { ethers } = require('ethers');
 dotenv.config();
 
 // Use local node URL if running locally (update accordingly)
-const localNodeUrl = process.env.NODE_URL; // Replace this with your local node URL
+const nodeUrl = process.env.NODE_URL; //local node URL or your mainnet URL > @dev if this is replaces with mainnet node, also wallet and private key should be updated. IF you replace just the NODE_URL, method balanceof is still callable
 const contractAddress = process.env.CONTRACT_ADDRESS;
 
 
@@ -36,7 +36,7 @@ router.get('/balanceof/:address', async (req, res) => {
     console.log(`Request received for address: ${address}`); // Debug output
 
     try {
-        const provider = new ethers.JsonRpcProvider(localNodeUrl); // Connect to the network
+        const provider = new ethers.JsonRpcProvider(nodeUrl); // Connect to the network
         const contract = new ethers.Contract(contractAddress, ABI, provider);
 
         // Fetch balance in tokens
@@ -72,7 +72,7 @@ router.post('/transfer', async (req, res) => {
 
     try {
         // Connect to the local Ethereum network
-        const provider = new ethers.JsonRpcProvider(localNodeUrl);
+        const provider = new ethers.JsonRpcProvider(nodeUrl);
         const wallet = new ethers.Wallet(ownerPrivateKey, provider);
         const contract = new ethers.Contract(contractAddress, ABI, wallet);
 
